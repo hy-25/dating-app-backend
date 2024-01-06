@@ -3,7 +3,7 @@
 */
 const mongoose = require('mongoose')
 require('dotenv').config()
-
+const morgan = require('morgan')
 const express = require('express')
 const userRoutes = require('./src/routes/userRoutes')
 /*
@@ -12,6 +12,7 @@ const userRoutes = require('./src/routes/userRoutes')
 const PORT = process.env.PORT || 3000
 const DATABASE_URL = process.env.DATABASE
 const DATABASE_PASSWORD = process.env.DATABASE_PASSWORD
+const NODE_ENV = process.env.NODE_ENV
 
 //Database initialization
 const finalUrl = DATABASE_URL.replace('<PASSWORD>', DATABASE_PASSWORD)
@@ -23,6 +24,10 @@ console.log(finalUrl)
 
 //App initialization
 const app = express()
+
+if (NODE_ENV == 'development') {
+  app.use(morgan('dev'))
+}
 
 //Routers
 app.use('/users', userRoutes)
