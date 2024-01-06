@@ -25,7 +25,7 @@ console.log(finalUrl)
 const app = express()
 
 //Routers
-app.route('/*').get((req, res) => {
+app.route('/*').get((_, res) => {
   res.status(200).json({
     status: 'OK',
     message: 'We are listing to you!',
