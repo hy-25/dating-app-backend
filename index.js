@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const express = require('express')
-
+const userRoutes = require('./src/routes/userRoutes')
 /*
     Constants & Env Variables
 */
@@ -25,12 +25,7 @@ console.log(finalUrl)
 const app = express()
 
 //Routers
-app.route('/*').get((_, res) => {
-  res.status(200).json({
-    status: 'OK',
-    message: 'We are listing to you!',
-  })
-}) //TODO: REMOVE IT LATER
+app.use('/users', userRoutes)
 
 //Port initialization
 app.listen(PORT, () => {
