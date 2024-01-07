@@ -5,6 +5,7 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: [true, 'Please tell us your username!'],
+    unique: true,
   },
   firstname: {
     type: String,
@@ -50,7 +51,7 @@ const UserSchema = new mongoose.Schema({
 })
 
 UserSchema.pre('save', async function (next) {
-  this._id = this.email
+  console.log('this._id', this._id, this.email)
   const newPass = await bcrypt.hash(this.password, 12)
   this.password = newPass
   next()

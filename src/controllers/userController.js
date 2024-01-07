@@ -7,8 +7,7 @@ async function addUser(req, res, next) {
   const data = await User.create(body)
   console.log(data)
   res.status(200).json({
-    status: 'success',
-    message: data,
+    data: data,
   })
 }
 
@@ -26,9 +25,10 @@ function updateUser(req, res) {
   })
 }
 
-function getUsers(req, res) {
+async function getUsers(req, res) {
+  const data = await User.find({})
   res.status(200).json({
-    message: 'these are the users',
+    data: data,
   })
 }
 
@@ -43,6 +43,6 @@ module.exports = {
   addUser: wrapWithTryCache(addUser),
   deleteUser,
   updateUser,
-  getUsers,
+  getUsers: wrapWithTryCache(getUsers),
   getUserById,
 }
