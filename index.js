@@ -20,7 +20,6 @@ console.log(finalUrl)
 mongoose.connect(finalUrl, {}).then(con => {
   console.log('Connections successful!')
 })
-console.log(finalUrl)
 
 //App initialization
 const app = express()
