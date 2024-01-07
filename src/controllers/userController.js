@@ -11,10 +11,14 @@ async function addUser(req, res, next) {
   })
 }
 
-function deleteUser(req, res) {
+async function deleteUser(req, res) {
   const params = req.params
+  const data = await User.deleteOne({
+    _id: params.id,
+  })
   res.status(200).json({
     message: 'User is deleted from the table',
+    data: data,
   })
 }
 
@@ -32,17 +36,22 @@ async function getUsers(req, res) {
   })
 }
 
-function getUserById(req, res) {
+async function getUserById(req, res) {
   const params = req.params
+  const id = params.id
+
+  const data = await User.find({
+    _id: id,
+  })
   res.status(200).json({
-    message: 'this is the user',
+    data: data,
   })
 }
 
 module.exports = {
   addUser: wrapWithTryCache(addUser),
-  deleteUser,
+  deleteUser: wrapWithTryCache(deleteUser),
   updateUser,
   getUsers: wrapWithTryCache(getUsers),
-  getUserById,
+  getUserById: wrapWithTryCache(getUserById),
 }
