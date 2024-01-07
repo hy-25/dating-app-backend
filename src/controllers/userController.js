@@ -1,6 +1,14 @@
-function addUser(req, res) {
+const User = require('../models/userModel')
+const { wrapWithTryCache } = require('../utils/controllerHelper')
+async function addUser(req, res, next) {
+  const body = req.body
+  console.log(body)
+  // Transform it later
+  const data = await User.create(body)
+  console.log(data)
   res.status(200).json({
-    message: 'User is added to table',
+    status: 'success',
+    message: data,
   })
 }
 
@@ -32,7 +40,7 @@ function getUserById(req, res) {
 }
 
 module.exports = {
-  addUser,
+  addUser: wrapWithTryCache(addUser),
   deleteUser,
   updateUser,
   getUsers,

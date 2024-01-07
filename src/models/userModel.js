@@ -44,8 +44,8 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: [true, 'Please tell us your longitude'],
       },
-      required: [true, 'Please tell us your location'],
     },
+    required: [true, 'Please tell us your location'],
   },
 })
 
