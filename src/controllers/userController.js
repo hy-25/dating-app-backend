@@ -1,10 +1,28 @@
 const User = require('../models/userModel')
 const { wrapWithTryCache } = require('../utils/controllerHelper')
 async function addUser(req, res, next) {
-  const body = req.body
-  console.log(body)
+  const {
+    username,
+    firstname,
+    lastname,
+    email,
+    password,
+    gender,
+    birthdate,
+    location,
+  } = req.body
+
   // Transform it later
-  const data = await User.create(body)
+  const data = await User.create({
+    username,
+    firstname,
+    lastname,
+    email,
+    password,
+    gender,
+    birthdate,
+    location,
+  })
   console.log(data)
   res.status(200).json({
     data: data,
@@ -22,10 +40,26 @@ async function deleteUser(req, res) {
   })
 }
 
-function updateUser(req, res) {
+async function updateUser(req, res) {
+  const { username, firstname, lastname, email, gender, birthdate, location } =
+    req.body
+
+  console.log('asdsd')
   const params = req.params
+
+  const data = await User.findByIdAndUpdate(
+    params.id,
+    { username, firstname, lastname, email, gender, birthdate, location },
+    {
+      new: true,
+    },
+  )
+
+  console.log(data)
+
   res.status(200).json({
     message: 'User is updatd to the table',
+    data: data,
   })
 }
 
@@ -51,7 +85,7 @@ async function getUserById(req, res) {
 module.exports = {
   addUser: wrapWithTryCache(addUser),
   deleteUser: wrapWithTryCache(deleteUser),
-  updateUser,
+  updateUser: wrapWithTryCache(updateUser),
   getUsers: wrapWithTryCache(getUsers),
   getUserById: wrapWithTryCache(getUserById),
 }
