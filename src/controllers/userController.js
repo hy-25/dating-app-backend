@@ -23,6 +23,7 @@ async function addUser(req, res, next) {
     birthdate,
     location,
   })
+
   console.log(data)
   res.status(200).json({
     data: data,
