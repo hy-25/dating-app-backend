@@ -23,6 +23,7 @@ async function addUser(req, res, next) {
     birthdate,
     location,
   })
+
   console.log(data)
   res.status(200).json({
     data: data,
@@ -64,7 +65,7 @@ async function updateUser(req, res) {
 }
 
 async function getUsers(req, res) {
-  const data = await User.find({})
+  const data = await User.find({}).select('-password')
   res.status(200).json({
     data: data,
   })
@@ -76,7 +77,7 @@ async function getUserById(req, res) {
 
   const data = await User.find({
     _id: id,
-  })
+  }).select('-password')
   res.status(200).json({
     data: data,
   })
